@@ -50,6 +50,8 @@ header {
   background-color: var(--background-light);
   color: var(--headline);
   padding: 0.5rem;
+
+  display: flex;
 }
 
 main {

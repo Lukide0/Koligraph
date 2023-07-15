@@ -31,13 +31,18 @@ function fatalErr(msg) {
   throw new Error("Fatal error");
 }
 
-const previewEl = document.getElementById("preview");
-const canvas = new Canvas(document.getElementById("canvas"));
+function $(select) {
+  return document.querySelector(select);
+}
 
-canvas.element.ondblclick = function (e) {
-  let x = e.clientX - canvas.boundRect.left;
-  let y = e.clientY - canvas.boundRect.top;
-  let shape = new Shape(x, y);
+const previewEl = $("#preview");
+const canvas = new Canvas($("#canvas"), $("#background"));
 
-  canvas.addShape(shape);
+const createLineCheckbox = $("#createLine");
+createLineCheckbox.onchange = function (e) {
+  if (createLineCheckbox.checked) {
+    canvas.state = ACTION.LINE;
+  } else {
+    canvas.state = ACTION.MOVE;
+  }
 };
