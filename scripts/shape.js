@@ -79,6 +79,14 @@ class Shape {
     this.lines.delete(line);
   }
 
+  focus() {
+    this.element.classList.add("selected");
+  }
+
+  blur() {
+    this.element.classList.remove("selected");
+  }
+
   setPos(x, y) {
     this.element.style.left = `${x}px`;
     this.element.style.top = `${y}px`;

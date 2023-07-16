@@ -49,6 +49,7 @@ class Canvas {
         };
 
         that._moveEl.style.userSelect = "none";
+        that._moveEl.shape.focus();
         that.element.addEventListener("mousemove", moveHelper);
       }
     };
@@ -57,6 +58,7 @@ class Canvas {
       if (that._moveEl !== null) {
         that.element.removeEventListener("mousemove", moveHelper);
         that._moveEl.style.userSelect = "auto";
+        that._moveEl.shape.blur();
         that._moveEl = null;
       }
     };
@@ -88,10 +90,12 @@ class Canvas {
       // line start
       if (that._selectedShape === null) {
         that._selectedShape = shapeEl.shape;
+        shapeEl.shape.focus();
       }
       // line end
       else {
         that.createLine(that._selectedShape, shapeEl.shape, that.svgEl);
+        that._selectedShape.blur();
         that._selectedShape = null;
       }
     };
