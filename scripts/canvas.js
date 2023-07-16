@@ -107,6 +107,18 @@ class Canvas {
   }
 
   createLine(startShape, endShape, svg) {
+    // line already exists
+    for (let line of startShape.lines) {
+      if (line.start == endShape || line.end == endShape) {
+        return;
+      }
+    }
+
+    // the line has no target
+    if (startShape == endShape) {
+      return;
+    }
+
     let line = new Line(startShape, endShape, svg);
 
     startShape.addLine(line);
