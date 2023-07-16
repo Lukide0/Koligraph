@@ -1,6 +1,7 @@
 const ACTION = {
   MOVE: "Move shape",
   LINE: "Create line",
+  DELETE: "Delete",
 };
 
 class Canvas {
@@ -8,7 +9,7 @@ class Canvas {
     this.element = element;
     this.svgEl = svgElement;
     this.boundRect = element.getBoundingClientRect();
-    this.shapes = [];
+    this.shapes = new Set();
     this._moveEl = null;
     this._selectedShape = null;
     this._mouseStart = { x: 0, y: 0 };
@@ -75,8 +76,14 @@ class Canvas {
     };
 
     this.element.onclick = function (e) {
-      if (that.state != ACTION.LINE) {
-        return;
+      switch (that.state) {
+        case ACTION.LINE:
+          break;
+        case ACTION.DELETE:
+          that._deleteShapeLine(e, that);
+          return;
+        default:
+          return;
       }
 
       let shapeEl = e.target.closest(".shape");
@@ -101,9 +108,29 @@ class Canvas {
     };
   }
 
+  setState(action) {
+    this.state = action;
+
+    // reset
+    if (this._selectedShape !== null) {
+      this._selectedShape.blur();
+    }
+
+    if (this._moveEl !== null) {
+      this._moveEl.shape.blur();
+    }
+
+    this._selectedShape = null;
+    this._moveEl = null;
+  }
+
   addShape(shape) {
-    this.shapes.push(shape);
+    this.shapes.add(shape);
     this.element.appendChild(shape.element);
+  }
+
+  removeShape(shape) {
+    this.shapes.delete(shape);
   }
 
   createLine(startShape, endShape, svg) {
@@ -132,5 +159,49 @@ class Canvas {
     shape.lines.forEach((line) => line.render());
 
     shape.setPos(Math.max(x, 0), Math.max(y, 0));
+  }
+
+  _deleteShapeLine(e, canvas) {
+    let name = e.target.nodeName;
+
+    // shape
+    if (name != "path") {
+      let shapeEl = e.target.closest(".shape");
+      if (shapeEl === null) {
+        return;
+      }
+
+      if (canvas._selectedShape != shapeEl.shape) {
+        // selected different shape
+        if (canvas._selectedShape !== null) {
+          canvas._selectedShape.blur();
+        }
+
+        canvas._selectedShape = shapeEl.shape;
+        shapeEl.shape.focus();
+        return;
+      }
+
+      canvas._selectedShape = null;
+
+      canvas.removeShape(shapeEl.shape);
+      shapeEl.shape.remove();
+    }
+    // line
+    else {
+      let line = e.target.line;
+
+      if (canvas._selectedShape != line) {
+        // selected different line
+        if (canvas._selectedShape !== null) {
+          canvas._selectedShape.blur();
+        }
+        canvas._selectedShape = line;
+        line.focus();
+
+        return;
+      }
+      line.remove();
+    }
   }
 }

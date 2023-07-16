@@ -38,11 +38,17 @@ function $(select) {
 const previewEl = $("#preview");
 const canvas = new Canvas($("#canvas"), $("#background"));
 
-const createLineCheckbox = $("#createLine");
-createLineCheckbox.onchange = function (e) {
-  if (createLineCheckbox.checked) {
-    canvas.state = ACTION.LINE;
-  } else {
-    canvas.state = ACTION.MOVE;
-  }
+const actionEl = $("#action");
+
+// generate options
+for (const [key, value] of Object.entries(ACTION)) {
+  let opt = document.createElement("option");
+  opt.setAttribute("value", key);
+  opt.text = value;
+
+  actionEl.appendChild(opt);
+}
+
+actionEl.onchange = function () {
+  canvas.setState(ACTION[actionEl.value]);
 };

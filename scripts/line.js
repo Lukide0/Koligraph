@@ -7,11 +7,26 @@ class Line {
       "http://www.w3.org/2000/svg",
       "path"
     );
-    this.lineEl.setAttribute("stroke", "#FFF");
-    this.lineEl.setAttribute("stroke-width", 1);
+    this.lineEl.classList.add("path");
+    this.lineEl.line = this;
 
     this.svg.appendChild(this.lineEl);
     this.render();
+  }
+
+  remove() {
+    this.start.removeLine(this);
+    this.end.removeLine(this);
+
+    this.lineEl.remove();
+  }
+
+  focus() {
+    this.lineEl.classList.add("selected");
+  }
+
+  blur() {
+    this.lineEl.classList.remove("selected");
   }
 
   render() {
@@ -19,6 +34,7 @@ class Line {
     let startRect = this.start.element.getBoundingClientRect();
     let endRect = this.end.element.getBoundingClientRect();
 
+    // centers of shapes
     let startXY = {
       x: startRect.width / 2 + startRect.x - containerRect.x,
       y: startRect.height / 2 + startRect.y - containerRect.y,

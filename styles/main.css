@@ -15,10 +15,10 @@
   --primary-raw: 255, 137, 6;
   --primary: rgb(var(--primary-raw));
 
-  --secondary-raw: 255, 137, 6;
+  --secondary-raw: 242, 95, 76;
   --secondary: rgb(var(--secondary-raw));
 
-  --tertiary-raw: 255, 137, 6;
+  --tertiary-raw: 229, 49, 112;
   --tertiary: rgb(var(--tertiary-raw));
 
   --shape-background-raw: 63, 59, 96;
@@ -109,5 +109,14 @@ main {
 }
 
 .shape.selected {
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--primary);
+}
+
+.path {
+  stroke: var(--tertiary);
+  stroke-width: 5;
+}
+
+.path.selected {
+  stroke: var(--primary);
 }

@@ -79,6 +79,14 @@ class Shape {
     this.lines.delete(line);
   }
 
+  remove() {
+    for (let line of this.lines) {
+      line.remove();
+    }
+
+    this.element.remove();
+  }
+
   focus() {
     this.element.classList.add("selected");
   }
