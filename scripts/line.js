@@ -48,7 +48,6 @@ class Line {
         break;
       case LINE_STYLE.DOTTED:
         this.lineEl.dataset.style = "dotted";
-        //coordinates from the centre of the shapes
         break;
       default:
         this.lineEl.dataset.style = "normal";
@@ -132,7 +131,7 @@ class Line {
       let gap = (lineHead != LINE_HEAD.NONE) * LINE_HEAD_SIZE;
       alpha += gap;
 
-      //coordinates from the centre of the shape
+      // coordinates from the centre of the shape
       let coord = { x: vector.x * alpha, y: vector.y * alpha };
       coord.x += width / 2;
       coord.y += height / 2;
