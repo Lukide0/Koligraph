@@ -147,7 +147,7 @@ class Shape {
         break;
     }
 
-    let content = this.textElement.textContent;
+    let content = this.textElement.innerHTML.replaceAll("<br>", "\n");
     if (content == "") {
       content = " ";
     }
