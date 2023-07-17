@@ -1,17 +1,17 @@
 const SHAPES = {
-  BOX: "BOX",
-  BOX_ROUND_EDGES: "BOX_ROUND_EDGES",
-  STADIUM: "STADIUM",
-  DATABASE: "DATABASE",
-  CIRCLE: "CIRCLE",
-  DOUBLE_CIRCLE: "DOUBLE_CIRCLE",
-  FLAG: "FLAG",
-  RHOMBUS: "RHOMBUS",
-  HEXAGON: "HEXAGON",
-  PARALLELOGRAM: "PARALLELOGRAM",
-  PARALLELOGRAM_ALT: "PARALLELOGRAM_ALT",
-  TRAPEZOID: "TRAPEZOID",
-  TRAPEZOID_ALT: "TRAPEZOID_ALT",
+  BOX: "Box",
+  BOX_ROUND_EDGES: "Box with round edges",
+  STADIUM: "Stadium",
+  DATABASE: "Database",
+  CIRCLE: "Circle",
+  DOUBLE_CIRCLE: "Double circle",
+  FLAG: "Flag",
+  RHOMBUS: "Rhombus",
+  HEXAGON: "Hexagon",
+  PARALLELOGRAM: "Parallelogram",
+  PARALLELOGRAM_ALT: "Parallelogram alt.",
+  TRAPEZOID: "Trapezoid",
+  TRAPEZOID_ALT: "Trapezoid alt.",
 };
 
 class Shape {
@@ -46,6 +46,7 @@ class Shape {
   }
 
   setShape(shape) {
+    this.shape = shape;
     this.element.className = "shape";
     switch (shape) {
       case SHAPES.BOX_ROUND_EDGES:

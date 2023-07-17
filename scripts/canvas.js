@@ -10,6 +10,7 @@ class Canvas {
     this.svgEl = svgElement;
     this.boundRect = element.getBoundingClientRect();
     this.shapes = new Set();
+    this._contextFn = null;
     this._moveEl = null;
     this._selectedShape = null;
     this._mouseStart = { x: 0, y: 0 };
@@ -36,8 +37,29 @@ class Canvas {
       }
     }
 
+    this.element.oncontextmenu = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (that._contextFn === null) {
+        return;
+      }
+
+      if (e.target.nodeName == "path") {
+        that._contextFn(e.target.line, "line", e);
+      } else {
+        let shapeEl = e.target.closest(".shape");
+
+        if (shapeEl !== null) {
+          that._contextFn(shapeEl.shape, "shape", e);
+        }
+      }
+    };
+
     this.element.onmousedown = function (e) {
-      if (that.state != ACTION.MOVE) {
+      const LEFT_CLICK = 1;
+
+      if (that.state != ACTION.MOVE || e.which != LEFT_CLICK) {
         return;
       }
 
@@ -106,6 +128,10 @@ class Canvas {
         that._selectedShape = null;
       }
     };
+  }
+
+  setContextMenuFn(fn) {
+    this._contextFn = fn;
   }
 
   setState(action) {
