@@ -73,6 +73,8 @@ main {
 }
 
 .shape {
+  --border: black;
+
   display: flex;
   align-items: center;
 
@@ -86,7 +88,8 @@ main {
   padding: 1rem;
 
   background-color: var(--shape-background);
-  border: 2px solid black;
+  border: 2px solid var(--border);
+  text-align: center;
 }
 
 .shape > [contenteditable] {
@@ -108,8 +111,221 @@ main {
   border-radius: 50%;
 }
 
+.shape.database {
+  border-bottom-width: 0;
+  border-top-width: 0;
+}
+
+.shape.database::before {
+  position: absolute;
+
+  top: 0;
+  left: -2px;
+
+  transform: translate(0, -50%);
+
+  display: block;
+  content: "";
+  width: 100%;
+  height: 1rem;
+
+  background: var(--shape-background);
+  border-radius: 100%;
+  border: 2px solid var(--border);
+}
+
+.shape.database::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  transform: translate(0, 50%);
+
+  display: block;
+  content: "";
+  width: 100%;
+  height: 1.5rem;
+  background-color: var(--shape-background);
+
+  border-radius: 100%;
+  border-bottom: 2px solid var(--border);
+}
+
+.shape.double-circle {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  outline: 2px solid var(--border);
+  outline-offset: -10px;
+}
+
+.shape.flag {
+  aspect-ratio: 3/1;
+  padding-left: 3rem;
+}
+
+.shape.flag::before {
+  position: absolute;
+  left: -1px;
+
+  transform: translate(-50%, 0) rotate(45deg);
+
+  display: block;
+  content: "";
+  height: calc(100% * sin(45deg));
+  aspect-ratio: 1/1;
+  background-color: var(--background);
+  border: 2px solid var(--border);
+  border-width: 2px 2px 0 0;
+}
+
+.shape.rhombus {
+  aspect-ratio: 1/1;
+  padding: 0.75rem;
+  transform: rotate(45deg);
+}
+
+.shape.rhombus > p {
+  transform: rotate(-45deg);
+}
+
+.shape.hexagon {
+  border-left: 0;
+  border-right: 0;
+}
+
+.shape.hexagon::before,
+.shape.hexagon::after {
+  position: absolute;
+  left: 1px;
+
+  transform: translate(-50%, 0) rotate(45deg);
+
+  display: block;
+  content: "";
+  height: calc(100% * sin(45deg));
+  aspect-ratio: 1/1;
+  background-color: var(--shape-background);
+  border: 2px solid var(--border);
+  border-width: 0 0 2px 2px;
+  clip-path: polygon(100% 100%, 0% 100%, 0% 0%);
+}
+
+.shape.hexagon::after {
+  left: auto;
+  right: 1px;
+  transform: translate(50%, 0) rotate(225deg);
+}
+
+.shape.parallelogram,
+.shape.parallelogram-alt {
+  --rot: 0deg;
+  --translate: -100%;
+  --path: 0% 100%, 100% 100%, 100% 0%;
+
+  border-left: 0;
+  border-right: 0;
+}
+
+.shape.parallelogram::before,
+.shape.parallelogram-alt::before,
+.shape.parallelogram::after,
+.shape.parallelogram-alt::after {
+  display: block;
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: translate(var(--translate), 0) rotate(var(--rot));
+
+  height: 100%;
+  width: 1rem;
+
+  border-bottom: 2px solid var(--border);
+
+  background-color: var(--shape-background);
+  clip-path: polygon(var(--path));
+}
+
+.shape.parallelogram::after,
+.shape.parallelogram-alt::after {
+  left: auto;
+  top: -2px;
+  right: 1px;
+
+  --rot: 180deg;
+  --translate: 100%;
+}
+
+.shape.parallelogram-alt {
+  --path: 100% 0%, 0% 0%, 100% 100%;
+}
+
+.shape.parallelogram-alt::before,
+.shape.parallelogram-alt::after {
+  border-bottom: 0;
+  border-top: 2px solid var(--border);
+  top: 0;
+}
+
+.shape.parallelogram-alt::before {
+  top: -2px;
+}
+
+.shape.trapezoid,
+.shape.trapezoid-alt {
+  --scale: 1;
+  --translate: -100%;
+  --path: 0% 100%, 100% 100%, 100% 0%;
+
+  border-left: 0;
+  border-right: 0;
+}
+
+.shape.trapezoid-alt {
+  --path: 100% 0%, 0% 0%, 100% 100%;
+}
+
+.shape.trapezoid::before,
+.shape.trapezoid::after,
+.shape.trapezoid-alt::before,
+.shape.trapezoid-alt::after {
+  display: block;
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: translate(var(--translate), 0) scaleX(var(--scale));
+
+  height: 100%;
+  width: 1rem;
+
+  border-bottom: 2px solid var(--border);
+
+  background-color: var(--shape-background);
+  clip-path: polygon(var(--path));
+}
+
+.shape.trapezoid::after,
+.shape.trapezoid-alt::after {
+  left: auto;
+  right: 0;
+
+  --translate: 100%;
+  --scale: -1;
+}
+
+.shape.trapezoid-alt::before,
+.shape.trapezoid-alt::after {
+  top: -2px;
+  border-bottom: 0;
+  border-top: 2px solid var(--border);
+}
 .shape.selected {
-  border: 2px solid var(--primary);
+  --border: var(--primary);
 }
 
 .path {

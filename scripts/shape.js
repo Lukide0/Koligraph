@@ -59,14 +59,32 @@ class Shape {
         this.element.classList.add("circle");
         break;
       case SHAPES.DATABASE:
+        this.element.classList.add("database");
+        break;
       case SHAPES.DOUBLE_CIRCLE:
+        this.element.classList.add("double-circle");
+        break;
       case SHAPES.FLAG:
+        this.element.classList.add("flag");
+        break;
       case SHAPES.RHOMBUS:
+        this.element.classList.add("rhombus");
+        break;
       case SHAPES.HEXAGON:
+        this.element.classList.add("hexagon");
+        break;
       case SHAPES.PARALLELOGRAM:
+        this.element.classList.add("parallelogram");
+        break;
       case SHAPES.PARALLELOGRAM_ALT:
+        this.element.classList.add("parallelogram-alt");
+        break;
       case SHAPES.TRAPEZOID:
+        this.element.classList.add("trapezoid");
+        break;
       case SHAPES.TRAPEZOID_ALT:
+        this.element.classList.add("trapezoid-alt");
+        break;
       default:
         break;
     }
