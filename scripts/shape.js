@@ -102,4 +102,56 @@ class Shape {
     this.pos.x = x;
     this.pos.y = y;
   }
+
+  toMermaid() {
+    let pair = ["[", "]"];
+
+    switch (this.shape) {
+      case SHAPES.BOX_ROUND_EDGES:
+        pair = ["(", ")"];
+        break;
+      case SHAPES.STADIUM:
+        pair = ["([", "])"];
+        break;
+      case SHAPES.CIRCLE:
+        pair = ["((", "))"];
+        break;
+      case SHAPES.DATABASE:
+        pair = ["[(", ")]"];
+        break;
+      case SHAPES.DOUBLE_CIRCLE:
+        pair = ["(((", ")))"];
+        break;
+      case SHAPES.FLAG:
+        pair = [">", "]"];
+        break;
+      case SHAPES.RHOMBUS:
+        pair = ["{", "}"];
+        break;
+      case SHAPES.HEXAGON:
+        pair = ["{{", "}}"];
+        break;
+      case SHAPES.PARALLELOGRAM:
+        pair = ["[/", "/]"];
+        break;
+      case SHAPES.PARALLELOGRAM_ALT:
+        pair = ["[\\", "\\]"];
+        break;
+      case SHAPES.TRAPEZOID:
+        pair = ["[/", "\\]"];
+        break;
+      case SHAPES.TRAPEZOID_ALT:
+        pair = ["[\\", "/]"];
+        break;
+      default:
+        break;
+    }
+
+    let content = this.textElement.textContent;
+    if (content == "") {
+      content = " ";
+    }
+
+    return `${pair[0]}\"${content}\"${pair[1]}`;
+  }
 }

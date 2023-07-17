@@ -230,4 +230,50 @@ class Canvas {
       line.remove();
     }
   }
+
+  exportAsMermaid() {
+    let shapes = [...this.shapes].sort((a, b) => {
+      if (a.pos.y < b.pos.y) {
+        return -1;
+      } else if (a.pos.y == b.pos.y && a.pos.x < b.pos.x) {
+        return -1;
+      } else return a.pos.x != b.pos.x || a.pos.y != b.pos.y;
+    });
+
+    let used = new Set();
+
+    let code = ["graph TD"];
+
+    for (let i = 0; i < shapes.length; i++) {
+      let shape = shapes[i];
+      if (used.has(shape)) {
+        continue;
+      }
+
+      let tmpCode = [`id_${i}${shape.toMermaid()}`];
+
+      let lines = [...shape.lines]
+        .filter((line) => line.start === shape)
+        .forEach((line) => {
+          let other = line.end;
+          let otherId = shapes.indexOf(other);
+
+          tmpCode.push(`id_${i}`);
+          tmpCode.push(line.toMermaid());
+
+          if (!used.has(other)) {
+            tmpCode.push(`id_${otherId}${other.toMermaid()}`);
+            used.add(other);
+          } else {
+            tmpCode.push(`id_${otherId}`);
+          }
+
+          tmpCode.push("\n\t");
+        });
+
+      code.push(tmpCode.join(" "));
+      used.add(shape);
+    }
+    return code.join("\n\t");
+  }
 }

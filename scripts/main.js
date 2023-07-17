@@ -49,7 +49,6 @@ function getKey(value, obj) {
   return Object.keys(obj).find((key) => obj[key] === value);
 }
 
-const previewEl = $("#preview");
 const canvas = new Canvas($("#canvas"), $("#background"));
 
 const shapeMenu = new Menu($("#shapeMenu"));
@@ -61,6 +60,8 @@ let shapeSelect = $("#shapeSelect");
 let lineStyleSelect = $("#lineStyle");
 let lineStartHeadSelect = $("#lineStartHead");
 let lineEndHeadSelect = $("#lineEndHead");
+let exportBtn = $("#export");
+let previewBtn = $("#preview");
 
 createOpts(actionEl, ACTION);
 createOpts(shapeSelect, SHAPES);
@@ -133,4 +134,13 @@ lineStartHeadSelect.onchange = function () {
 
 lineEndHeadSelect.onchange = function () {
   selected.setEndHead(LINE_HEAD[lineEndHeadSelect.value]);
+};
+
+exportBtn.onclick = function () {
+  alert(canvas.exportAsMermaid());
+};
+
+previewBtn.onclick = function () {
+  let base64Str = btoa(canvas.exportAsMermaid());
+  window.open(`https://mermaid.ink/svg/${base64Str}`);
 };

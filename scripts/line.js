@@ -165,4 +165,51 @@ class Line {
       `M ${startCoord.x} ${startCoord.y} L ${endCoord.x} ${endCoord.y}`
     );
   }
+
+  toMermaid() {
+    let startHead = "";
+    let endHead = "";
+    let style = "---";
+
+    switch (this.startHead) {
+      case LINE_HEAD.ARROW:
+        startHead = "<";
+        break;
+      case LINE_HEAD.DOT:
+        startHead = "o";
+        break;
+      case LINE_HEAD.CROSS:
+        startHead = "x";
+        break;
+      default:
+        break;
+    }
+
+    switch (this.endHead) {
+      case LINE_HEAD.ARROW:
+        endHead = ">";
+        break;
+      case LINE_HEAD.DOT:
+        endHead = "o";
+        break;
+      case LINE_HEAD.CROSS:
+        endHead = "x";
+        break;
+      default:
+        break;
+    }
+
+    switch (this.style) {
+      case LINE_STYLE.THICK:
+        style = "===";
+        break;
+      case LINE_STYLE.DOTTED:
+        style = "-.-";
+        break;
+      default:
+        break;
+    }
+
+    return `${startHead}${style}${endHead}`;
+  }
 }
