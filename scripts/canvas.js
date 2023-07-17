@@ -250,7 +250,7 @@ class Canvas {
         continue;
       }
 
-      let tmpCode = [`id_${i}${shape.toMermaid()}`];
+      let tmpCode = [`id_${i}${shape.toMermaid()}\n\t`];
 
       let lines = [...shape.lines]
         .filter((line) => line.start === shape)
