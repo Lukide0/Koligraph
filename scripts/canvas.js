@@ -240,40 +240,28 @@ class Canvas {
       } else return a.pos.x != b.pos.x || a.pos.y != b.pos.y;
     });
 
-    let used = new Set();
-
+    let map = {};
     let code = ["graph TD"];
 
     for (let i = 0; i < shapes.length; i++) {
       let shape = shapes[i];
-      if (used.has(shape)) {
-        continue;
-      }
-
-      let tmpCode = [`id_${i}${shape.toMermaid()}\n\t`];
-
-      let lines = [...shape.lines]
-        .filter((line) => line.start === shape)
-        .forEach((line) => {
-          let other = line.end;
-          let otherId = shapes.indexOf(other);
-
-          tmpCode.push(`id_${i}`);
-          tmpCode.push(line.toMermaid());
-
-          if (!used.has(other)) {
-            tmpCode.push(`id_${otherId}${other.toMermaid()}`);
-            used.add(other);
-          } else {
-            tmpCode.push(`id_${otherId}`);
-          }
-
-          tmpCode.push("\n\t");
-        });
-
-      code.push(tmpCode.join(" "));
-      used.add(shape);
+      code.push(`id_${i}${shape.toMermaid()}`);
+      map[i] = `id_${i}`;
     }
+
+    code.push("");
+
+    for (let i = 0; i < shapes.length; i++) {
+      let shape = shapes[i];
+      console.log(shape);
+      [...shape.lines]
+        .filter((l) => l.start == shape)
+        .forEach((line) => {
+          let otherShapeIndex = shapes.indexOf(line.end);
+          code.push(`${map[i]} ${line.toMermaid()} ${map[otherShapeIndex]}`);
+        });
+    }
+
     return code.join("\n\t");
   }
 }
