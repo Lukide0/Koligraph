@@ -253,7 +253,6 @@ class Canvas {
 
     for (let i = 0; i < shapes.length; i++) {
       let shape = shapes[i];
-      console.log(shape);
       [...shape.lines]
         .filter((l) => l.start == shape)
         .forEach((line) => {
